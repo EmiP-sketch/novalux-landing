@@ -3,255 +3,1014 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaLux | Moda & Fragancias con Identidad</title>
-    <!-- Tailwind CSS para un diseño rápido y moderno -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Iconos Lucide (similares a los que se usan en desarrollo moderno) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>E-Commerce - Premium Store</title>
+    <style>
+        /* --- ESTILOS GENERALES Y PALETA DE COLORES (Serio, Limpio y Juvenil) --- */
+        :root {
+            --bg-principal: #f8fafc;       /* Blanco/Grisáceo muy claro y limpio */
+            --bg-tarjeta: #ffffff;         /* Blanco puro */
+            --texto-oscuro: #0f172a;       /* Negro/Azul oscuro profundo */
+            --texto-mutado: #64748b;      /* Gris serio */
+            --azul-juvenil: #0088ff;      /* Azul claro/eléctrico brillante para detalles juveniles */
+            --azul-hover: #0066cc;
+            --borde: #e2e8f0;              /* Gris muy claro para separar con elegancia */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto-oscuro);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER Y NAVEGACIÓN --- */
+        header {
+            background-color: var(--texto-oscuro);
+            color: white;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--azul-juvenil);
+        }
+
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--azul-juvenil);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        main {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        /* --- SECCIONES --- */
+        section {
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--azul-juvenil);
+            border-radius: 2px;
+        }
+
+        /* --- REJILLA DE PRODUCTOS (GRID) --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        /* --- TARJETA DE PRODUCTO --- */
+        .product-card {
+            background-color: var(--bg-tarjeta);
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+            border-color: rgba(0, 136, 255, 0.3);
+        }
+
+        .badge-oferta {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--texto-oscuro);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            border: 1px solid var(--azul-juvenil);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 280px;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            border-top: 1px solid var(--borde);
+            background-color: #ffffff;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--texto-oscuro);
+            margin-bottom: 0.5rem;
+            min-height: 2.4rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--azul-juvenil);
+            margin-bottom: 1rem;
+        }
+
+        .btn-add {
+            width: 100%;
+            background-color: var(--texto-oscuro);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background-color: var(--azul-juvenil);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--texto-oscuro);
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 5rem;
+            font-size: 0.9rem;
+            border-top: 3px solid var(--azul-juvenil);
+        }
+    </style>
 </head>
-<body class="bg-stone-50 text-stone-900 font-sans antialiased">
+<body>
 
-    <!-- HERO SECTION: Storytelling y Captura Inmediata -->
-    <header class="relative h-screen flex items-center justify-center bg-zinc-900 text-white overflow-hidden">
-        <!-- Fondo conceptual (puedes cambiarlo por un video o imagen real de NovaLux) -->
-        <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 z-10"></div>
-        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80" 
-             alt="NovaLux Concept" 
-             class="absolute inset-0 w-full h-full object-cover object-center transform scale-105 animate-pulse-slow">
-
-        <!-- Contenido Principal -->
-        <div class="relative z-20 text-center px-6 max-w-3xl">
-            <span class="text-xs uppercase tracking-widest text-stone-300 font-semibold bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">Estilo sin etiquetas</span>
-            <h1 class="text-5xl md:text-7xl font-light tracking-tight mt-6 mb-4">
-                Define tu <span class="italic font-serif text-amber-200">aura</span>
-            </h1>
-            <p class="text-lg md:text-xl text-stone-200 font-light mb-8 max-w-xl mx-auto">
-                Ropa que se adapta a tu movimiento. Fragancias que narran quién eres antes de hablar. NovaLux es tu nuevo espacio de autocuidado.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#productos" class="bg-white text-zinc-950 px-8 py-3 rounded-full text-sm font-medium tracking-wider hover:bg-stone-200 transition-all text-center">
-                    Explorar Colección
-                </a>
-                <a href="#quiz" class="border border-white/40 text-white px-8 py-3 rounded-full text-sm font-medium tracking-wider hover:bg-white/10 transition-all text-center backdrop-blur-sm">
-                    Encontrar mi Perfume
-                </a>
-            </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
-            <i data-lucide="arrow-down" class="text-white/60 w-6 h-6"></i>
+    <header>
+        <div class="header-container">
+            <div class="logo">Concept<span>Store</span></div>
+            <nav>
+                <a href="#perfumes">Perfumes</a>
+                <a href="#ropa">Ropa</a>
+                <a href="#tecnologia">Tecnología</a>
+            </nav>
         </div>
     </header>
 
-    <!-- LEAD MAGNET: El gancho del 15% (Estrategia 5) -->
-    <section class="bg-amber-100 py-4 px-6 text-center text-zinc-900 sticky top-0 z-50 shadow-sm backdrop-blur-md bg-opacity-95">
-        <p class="text-sm font-medium">
-            ✨ <span class="font-bold">Únete al club NovaLux:</span> Obtén un 15% de descuento en tu primer pedido y acceso a drops exclusivos. 
-            <a href="#newsletter" class="underline ml-2 hover:text-amber-800">Registrarme ahora</a>
-        </p>
-    </section>
+    <main>
 
-    <!-- PROPUESTA DE VALOR / STORYTELLING (Estrategia 1) -->
-    <section class="py-20 px-6 max-w-5xl mx-auto text-center">
-        <h2 class="text-xs uppercase tracking-widest text-stone-400 font-bold mb-3">La Filosofía NovaLux</h2>
-        <p class="text-2xl md:text-3xl font-serif text-stone-800 max-w-3xl mx-auto leading-relaxed">
-            "Creemos en la moda inclusiva y en el bienestar emocional. No catalogamos por género, catalogamos por vibras y estados de ánimo."
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 text-left">
-            <div class="p-6 bg-white rounded-2xl shadow-sm border border-stone-100">
-                <i data-lucide="sparkles" class="text-amber-600 mb-4"></i>
-                <h3 class="font-semibold text-lg mb-2">Fórmulas Cruelty-Free</h3>
-                <p class="text-stone-500 text-sm">Perfumes de alta fijación creados de manera ética, respetando tu piel y el entorno.</p>
-            </div>
-            <div class="p-6 bg-white rounded-2xl shadow-sm border border-stone-100">
-                <i data-lucide="shirt" class="text-amber-600 mb-4"></i>
-                <h3 class="font-semibold text-lg mb-2">Texturas Orgánicas</h3>
-                <p class="text-stone-500 text-sm">Prendas de algodón premium diseñadas para durar y ofrecer un confort absoluto.</p>
-            </div>
-            <div class="p-6 bg-white rounded-2xl shadow-sm border border-stone-100">
-                <i data-lucide="truck" class="text-amber-600 mb-4"></i>
-                <h3 class="font-semibold text-lg mb-2">Cambios sin Estrés</h3>
-                <p class="text-stone-500 text-sm">¿No te quedó la talla? Tienes 30 días de devoluciones completamente gratis.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRODUCT SHOWCASE (Estrategia 3 y 4) -->
-    <section id="productos" class="py-16 bg-zinc-900 text-white px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold mb-2">Best Sellers</h2>
-                    <p class="text-3xl font-serif">Curaduría de Temporada</p>
-                </div>
-                <span class="text-sm text-stone-400 hidden md:block">Mostrando stock en tiempo real 🟢</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Tarjeta Producto 1: Ropa -->
-                <div class="group relative bg-zinc-800 rounded-2xl overflow-hidden shadow-md">
-                    <div class="aspect-[3/4] overflow-hidden bg-zinc-700 relative">
-                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=500&q=80" 
-                             alt="Oversized Hoodie" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-4 left-4 bg-zinc-900/80 backdrop-blur-sm text-xs px-3 py-1 rounded-full text-amber-300">Eco-Cotton</span>
+        <!-- ================= SECCIÓN: PERFUMES ================= -->
+        <section id="perfumes">
+            <h2 class="section-title">Perfumes</h2>
+            <div class="products-grid">
+                
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/xerjoff_alexandria.jpg" alt="Xerjoff Alexandria 100ml">
                     </div>
-                    <div class="p-5">
-                        <h3 class="font-medium text-lg">Sudadera Oversize 'Aura'</h3>
-                        <p class="text-sm text-stone-400 mt-1">Gris Mineral | Unisex</p>
-                        <!-- Selector de tallas intuitivo -->
-                        <div class="mt-4 flex gap-2">
-                            <button class="w-8 h-8 text-xs border border-stone-600 rounded-full hover:border-white transition-colors">S</button>
-                            <button class="w-8 h-8 text-xs border border-white rounded-full bg-white text-zinc-950 font-bold">M</button>
-                            <button class="w-8 h-8 text-xs border border-stone-600 rounded-full hover:border-white transition-colors">L</button>
-                        </div>
-                        <div class="flex justify-between items-center mt-6">
-                            <span class="font-serif text-xl">$890 MXN</span>
-                            <button class="bg-amber-400 text-zinc-950 p-2.5 rounded-full hover:bg-amber-300 transition-colors">
-                                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                            </button>
-                        </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Xerjoff Alexandria 100ml</h3>
+                        <p class="product-price">$ 850.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
                     </div>
                 </div>
 
-                <!-- Tarjeta Producto 2: Perfume -->
-                <div class="group relative bg-zinc-800 rounded-2xl overflow-hidden shadow-md">
-                    <div class="aspect-[3/4] overflow-hidden bg-zinc-700 relative">
-                        <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=500&q=80" 
-                             alt="Perfume" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-4 left-4 bg-zinc-900/80 backdrop-blur-sm text-xs px-3 py-1 rounded-full text-amber-300">Set de Muestras Disp.</span>
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_uomo_intense.jpg" alt="Valentino Uomo Intense 100ml">
                     </div>
-                    <div class="p-5">
-                        <h3 class="font-medium text-lg">Eau de Parfum 'Nuit'</h3>
-                        <!-- Narrativa Sensorial (Estrategia 3) -->
-                        <p class="text-xs italic text-amber-200/80 mt-1">"Como lluvia fresca sobre asfalto cálido al atardecer."</p>
-                        <p class="text-sm text-stone-400 mt-2">Notas: Sándalo, Cardamomo y Cítricos.</p>
-                        <div class="flex justify-between items-center mt-12">
-                            <span class="font-serif text-xl">$1,250 MXN</span>
-                            <button class="bg-amber-400 text-zinc-950 p-2.5 rounded-full hover:bg-amber-300 transition-colors">
-                                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                            </button>
-                        </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Uomo Intense 100ml</h3>
+                        <p class="product-price">$ 780.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
                     </div>
                 </div>
 
-                <!-- Producto 3 y 4 se pueden clonar/adaptar dinámicamente -->
-            </div>
-        </div>
-    </section>
-
-    <!-- INTERACTIVE PERFUME FINDER QUIZ (Estrategia 3) -->
-    <section id="quiz" class="py-20 px-6 bg-amber-50/60">
-        <div class="max-w-xl mx-auto text-center bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-stone-200/60">
-            <i data-lucide="compass" class="mx-auto text-amber-600 w-10 h-10 mb-4 animate-spin-slow"></i>
-            <h2 class="text-2xl font-serif mb-2">Buscador de Fragancia Ideal</h2>
-            <p class="text-stone-500 text-sm mb-8">Responde 2 preguntas rápidas y descifra tu código olfativo de hoy.</p>
-            
-            <div id="quiz-container" class="text-left">
-                <label class="block text-xs uppercase tracking-wider font-bold text-stone-500 mb-3">1. ¿Cuál es tu plan perfecto de fin de semana?</label>
-                <div class="space-y-3 mb-6">
-                    <button onclick="nextStep()" class="w-full p-4 rounded-xl border border-stone-200 text-left hover:bg-stone-50 hover:border-stone-400 transition-all text-sm">
-                        ☕ Leer en una cafetería lluviosa con un playlist indie.
-                    </button>
-                    <button onclick="nextStep()" class="w-full p-4 rounded-xl border border-stone-200 text-left hover:bg-stone-50 hover:border-stone-400 transition-all text-sm">
-                        🌃 Clubbing con amigos, outfits oscuros y techno suave.
-                    </button>
-                    <button onclick="nextStep()" class="w-full p-4 rounded-xl border border-stone-200 text-left hover:bg-stone-50 hover:border-stone-400 transition-all text-sm">
-                        🌊 Una caminata al aire libre recopilando inspiración visual.
-                    </button>
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/xerjoff_erba_pura.jpg" alt="Xerjoff Erba Pura 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Xerjoff Erba Pura Eau de Parfum 100ml</h3>
+                        <p class="product-price">$ 820.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- UGC & PRUEBA SOCIAL (Estrategia 5) -->
-    <section class="py-16 px-6 max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="text-xs uppercase tracking-widest text-stone-400 font-bold mb-2">Comunidad NovaLux</h2>
-            <p class="text-3xl font-serif">Visto en #PerfumeTok & Instagram</p>
-        </div>
-        <!-- Grid de Contenido Generado por Usuarios (UGC) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="relative group rounded-xl overflow-hidden aspect-square">
-                <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80" alt="UGC 1" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs">@sofia_nx</div>
-            </div>
-            <div class="relative group rounded-xl overflow-hidden aspect-square">
-                <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=400&q=80" alt="UGC 2" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs">@mateo_style</div>
-            </div>
-            <div class="relative group rounded-xl overflow-hidden aspect-square">
-                <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=400&q=80" alt="UGC 3" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs">@nova_unboxing</div>
-            </div>
-            <div class="relative group rounded-xl overflow-hidden aspect-square">
-                <img src="https://images.unsplash.com/photo-1496345875659-11f7dd282d1d?auto=format&fit=crop&w=400&q=80" alt="UGC 4" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs">@auras_fragrance</div>
-            </div>
-        </div>
-    </section>
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/xerjoff_homme_anniversary.jpg" alt="Xerjoff Homme Anniversary 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Xerjoff Homme Anniversary 100ml</h3>
+                        <p class="product-price">$ 920.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
 
-    <!-- CAPTACIÓN DE LEADS / NEWSLETTER (Estrategia 5) -->
-    <section id="newsletter" class="py-20 bg-stone-900 text-white px-6 text-center">
-        <div class="max-w-md mx-auto">
-            <h2 class="text-3xl font-serif mb-4">No te quedes fuera del próximo drop</h2>
-            <p class="text-stone-400 text-sm mb-8">Únete a nuestra newsletter. Te enviaremos el código del 15% de inmediato.</p>
-            <form onsubmit="handleSubscribe(event)" class="flex flex-col sm:flex-row gap-3">
-                <input type="email" placeholder="Tu correo electrónico" required 
-                       class="bg-zinc-800 text-white px-5 py-3 rounded-full text-sm border border-stone-700 focus:outline-none focus:border-amber-400 flex-grow">
-                <button type="submit" class="bg-amber-400 text-zinc-950 px-6 py-3 rounded-full text-sm font-medium hover:bg-amber-300 transition-colors whitespace-nowrap">
-                    Obtener mi descuento
-                </button>
-            </form>
-            <div id="form-feedback" class="mt-4 text-xs text-amber-300 hidden">¡Listo! Revisa tu bandeja de entrada en unos instantes. ✨</div>
-        </div>
-    </section>
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/coco_mademoiselle.jpg" alt="Coco Mademoiselle 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Coco Mademoiselle Eau de Parfum Intense 100ml</h3>
+                        <p class="product-price">$ 750.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
 
-    <!-- FOOTER & CONFIANZA DE PAGO (Estrategia 6) -->
-    <footer class="py-8 bg-zinc-950 text-stone-500 text-xs px-6 border-t border-stone-900">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-                <p class="font-serif text-sm text-stone-300 font-bold tracking-wider">NOVALUX</p>
-                <p class="mt-2">&copy; 2026 NovaLux S.A. Todos los derechos reservados.</p>
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/xerjoff_opera.jpg" alt="Xerjoff Opera">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Xerjoff Opera</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/xerjoff_starlight.jpg" alt="Xerjoff StarLight 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Xerjoff StarLight 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/sabrina_carpenter.jpg" alt="Sabrina Carpenter Caramel Dream">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Sabrina Carpenter Caramel Dream 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/versace_dylan_blue.jpg" alt="Versace Dylan Blue 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Versace Dylan Blue 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-oferta">Agotado</span>
+                    <div class="image-container">
+                        <img src="images/perfumes/jpg_le_male_elixir.jpg" alt="Jean Paul Gaultier Le Male Elixir">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Jean Paul Gaultier Le Male Elixir</h3>
+                        <p class="product-price">$ 1,500.00</p>
+                        <button class="btn-add" disabled style="background-color: #cbd5e1; cursor: not-allowed;">Agotado</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/xerjoff_accento_overdose.jpg" alt="Xerjoff Accento Overdose 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Xerjoff Accento Overdose 100ml</h3>
+                        <p class="product-price">$ 1,290.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/xerjoff_purple_accento.jpg" alt="Xerjoff Purple Accento 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Xerjoff Purple Accento Eau de Parfum 100ml</h3>
+                        <p class="product-price">$ 1,290.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/212_vip_rose.jpg" alt="212 VIP ROSE">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">212 VIP ROSE</h3>
+                        <p class="product-price">$ 1,300.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/ariana_grande_cloud.jpg" alt="Ariana Grande Cloud 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Ariana Grande Cloud 100ml</h3>
+                        <p class="product-price">$ 1,000.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/hawas_black.jpg" alt="Hawas Black 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hawas Black 100ml</h3>
+                        <p class="product-price">$ 1,000.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/club_de_nuit.jpg" alt="Club de Nuit Intense 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Club de Nuit Intense 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/scandal_jpg.jpg" alt="Scandal Jean Paul 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Scandal Jean Paul 100ml</h3>
+                        <p class="product-price">$ 1,000.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/versace_eros.jpg" alt="Versace Eros 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Versace Eros 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/armaf_odyssey.jpg" alt="Armaf Odyssey Mandarin Sky 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Armaf Odyssey Mandarin Sky 100ml</h3>
+                        <p class="product-price">$ 1,230.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_yellow_dream.jpg" alt="Valentino Donna Born In Roma Yellow Dream 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Donna Born In Roma Yellow Dream 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_donna_eau.jpg" alt="Valentino Donna Eau de Parfum 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Donna Eau de Parfum 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_green_stravaganza.jpg" alt="Valentino Donna Born in Roma Green Stravaganza 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Donna Born in Roma Green Stravaganza 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/212_vip_black.jpg" alt="212 VIP Black NYC">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">212 VIP Black NYC</h3>
+                        <p class="product-price">$ 1,119.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/versace_tradicional.jpg" alt="Versace Tradicional 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Versace Tradicional 100ml</h3>
+                        <p class="product-price">$ 1,250.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/creed_aventus.jpg" alt="Creed Aventus 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Creed Aventus Eau de Parfum 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_donna_born_roma.jpg" alt="Valentino Donna Born in Roma 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Donna Born in Roma Eau de Parfum 100ml</h3>
+                        <p class="product-price">$ 1,158.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/jpg_scandal_le_parfum.jpg" alt="JPG Scandal Le Parfum 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Jean Paul Gaultier Scandal Le Parfum Pour Homme 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/jpg_le_male_125.jpg" alt="Jean Paul Gaultier 125ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Jean Paul Gaultier 125ml</h3>
+                        <p class="product-price">$ 1,500.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_uomo_green.jpg" alt="Valentino Uomo Born In Roma Green Stravaganza 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Uomo Born In Roma Green Stravaganza 100ml</h3>
+                        <p class="product-price">$ 1,115.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_born_roma_intense.jpg" alt="Valentino Born In Roma Donna Intense 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Born In Roma Donna Intense 100ml</h3>
+                        <p class="product-price">$ 1,110.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/valentino_uomo_born_intense.jpg" alt="Valentino Uomo Born In Roma Intense 100ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Valentino Uomo Born In Roma Intense 100ml</h3>
+                        <p class="product-price">$ 1,200.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/jpg_le_male_classic_125.jpg" alt="Jean Paul Gaultier Le male 125ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Jean Paul Gaultier Le male 125ml</h3>
+                        <p class="product-price">$ 1,195.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/perfumes/yves_saint_laurent_edp.jpg" alt="Yves Saint Laurent Eau De Parfum 100Ml">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Yves Saint Laurent Eau De Parfum 100Ml</h3>
+                        <p class="product-price">$ 1,100.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
             </div>
-            <!-- Pasarelas Móviles Nativas Exigidas -->
-            <div class="flex items-center gap-4 text-lg">
-                <span class="text-[10px] uppercase tracking-widest text-stone-600">Pagos Seguros SSL:</span>
-                <span class="font-bold text-stone-400">Apple Pay</span>
-                <span class="font-bold text-stone-400">Google Pay</span>
-                <span class="font-bold text-stone-400">Stripe</span>
+        </section>
+
+
+        <!-- ================= SECCIÓN: ROPA ================= -->
+        <section id="ropa">
+            <h2 class="section-title">Ropa</h2>
+            <div class="products-grid">
+
+                <!-- Gorras -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/gorra_barbas_bstar.jpg" alt="Barbas Hats B-Star Azul">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Barbas Hats "B-Star Azul"</h3>
+                        <p class="product-price">$ 600.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/gorra_barbas_bbb.jpg" alt="Barbas Hats BBB Blue">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Barbas Hats "BBB Blue"</h3>
+                        <p class="product-price">$ 930.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/gorra_barbas_natanael.jpg" alt="Barbas Hats Chrome X Natanael Cano">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Barbas Hats "Chrome X Natanael Cano"</h3>
+                        <p class="product-price">$ 1,500.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/gorra_barbas_crime.jpg" alt="Barbas Hats Crime">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Barbas Hats "Crime"</h3>
+                        <p class="product-price">$ 2,000.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <!-- Playeras -->
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_palm_angels.jpg" alt="Palm Angels Blue Black">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Palm Angels Blue Black</h3>
+                        <p class="product-price">$ 789.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_hellstar_tees.jpg" alt="Hellstar Tees">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hellstar Tees</h3>
+                        <p class="product-price">$ 820.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_hellstar_tour.jpg" alt="Hellstar Tour">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hellstar Tour</h3>
+                        <p class="product-price">$ 820.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_hellstar_08.jpg" alt="Hellstar 08">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hellstar 08</h3>
+                        <p class="product-price">$ 820.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_chrome_hearts.jpg" alt="Chrome hearts - Hell Hype">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Chrome hearts - Hell Hype</h3>
+                        <p class="product-price">$ 750.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_ami_paris.jpg" alt="Ami Paris Black">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Ami Paris Black</h3>
+                        <p class="product-price">$ 750.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_hellstar_racer.jpg" alt="Hellstar Brain Racer Long-Sleeve Tee">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hellstar Brain Racer Long-Sleeve Tee</h3>
+                        <p class="product-price">$ 750.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_hellstar_neutro.jpg" alt="Hellstar Classic Neutro">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hellstar Classic Neutro</h3>
+                        <p class="product-price">$ 689.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_hellstar_white_blue.jpg" alt="Hellstar White/Blue">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hellstar White/Blue</h3>
+                        <p class="product-price">$ 700.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_amiri_floral.jpg" alt="Amiri Floral Blue/White">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Amiri Floral Blue/White</h3>
+                        <p class="product-price">$ 670.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/ropa/playera_amiri_baroque.jpg" alt="Amiri Baroque Logo">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Amiri Baroque Logo</h3>
+                        <p class="product-price">$ 699.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
             </div>
-        </div>
+        </section>
+
+
+        <!-- ================= NUEVA SECCIÓN: TECNOLOGÍA ================= -->
+        <section id="tecnologia">
+            <h2 class="section-title">Tecnología</h2>
+            <div class="products-grid">
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/magsafe_battery.jpg" alt="Batería MagSafe">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Batería MagSafe Apple</h3>
+                        <p class="product-price">$ 195.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/set_cubo_cable_cc.jpg" alt="C-C Set cubo y cable">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">C-C - Set cubo y cable</h3>
+                        <p class="product-price">$ 130.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/set_cubo_cable_lc.jpg" alt="L-C Set cubo y cable">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">L-C - Set cubo y cable</h3>
+                        <p class="product-price">$ 150.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/jbl_flip_6.jpg" alt="JBL FLIP 6">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">JBL FLIP 6</h3>
+                        <p class="product-price">$ 490.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-oferta">Oferta</span>
+                    <div class="image-container">
+                        <img src="images/tecnologia/airpods_3gen.jpg" alt="AirPods 3-GEN">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">AirPods 3-GEN</h3>
+                        <p class="product-price">$ 400.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/apple_watch_nike_10.jpg" alt="APPLE WATCH NIKE SERIES 10">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">APPLE WATCH NIKE SERIES 10</h3>
+                        <p class="product-price">$ 600.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/apple_watch_ultra.jpg" alt="APPLE WATCH ULTRA">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">APPLE WATCH ULTRA</h3>
+                        <p class="product-price">$ 2,000.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/airpods_max.jpg" alt="AirPods Max">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">AirPods Max</h3>
+                        <p class="product-price">$ 800.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-oferta">Oferta</span>
+                    <div class="image-container">
+                        <img src="images/tecnologia/airpods_2pro_alta.jpg" alt="AirPods 2 Pro -GEN Alta calidad">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">AirPods 2 Pro -GEN (Con cancelación real) ALTA CALIDAD</h3>
+                        <p class="product-price">$ 400.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/airpods_2pro_premium.jpg" alt="AirPods 2 Pro Premium">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">AirPods 2 Pro (sin cancelación, caja premium)</h3>
+                        <p class="product-price">$ 300.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-oferta">Oferta</span>
+                    <div class="image-container">
+                        <img src="images/tecnologia/airpods_4gen.jpg" alt="AirPods 4-GEN">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">AirPods 4-GEN (Cancelación real)</h3>
+                        <p class="product-price">$ 520.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/airpods_3pro_traductor.jpg" alt="AirPods 3 Pro">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">AirPods 3 Pro (Cancelación y traductor)</h3>
+                        <p class="product-price">$ 410.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-oferta">Oferta</span>
+                    <div class="image-container">
+                        <img src="images/tecnologia/galaxy_buds_2pro.jpg" alt="Galaxy Buds 2 Pro">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Galaxy Buds 2 Pro</h3>
+                        <p class="product-price">$ 280.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/galaxy_buds_3.jpg" alt="Buds Galaxy 3">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Buds Galaxy 3</h3>
+                        <p class="product-price">$ 400.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/magsafe_wallet.jpg" alt="Cartera MagSafe Apple">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cartera MagSafe Apple</h3>
+                        <p class="product-price">$ 255.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-oferta">Oferta</span>
+                    <div class="image-container">
+                        <img src="images/tecnologia/beats_studio_pro.jpg" alt="Beats Studio Pro">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Beats Studio Pro</h3>
+                        <p class="product-price">$ 600.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/iphone_cases_colors.jpg" alt="Protector para celular iPhone colores">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Protector de Silicona para iPhone (Varios Colores)</h3>
+                        <p class="product-price">$ 250.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/pack_inicial_pro2.jpg" alt="Pack inicial Pro 2">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pack inicial (Pro 2 Cancelación real)</h3>
+                        <p class="product-price">$ 2,000.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="image-container">
+                        <img src="images/tecnologia/iphone_case_clear.jpg" alt="Protector para celular iPhone Transparente">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Protector Clear Case MagSafe para iPhone</h3>
+                        <p class="product-price">$ 290.00</p>
+                        <button class="btn-add">Añadir al carrito</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Premium Concept Store. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- LÓGICA DE INTERACCIÓN (JS Ligero) -->
-    <script>
-        // Inicializar iconos de Lucide automáticamente
-        lucide.createIcons();
-
-        // Simulación interactiva del buscador de perfumes
-        function nextStep() {
-            const container = document.getElementById('quiz-container');
-            container.innerHTML = `
-                <div class="text-center py-6 animate-fade-in">
-                    <p class="text-xs uppercase tracking-wider text-amber-600 font-bold mb-1">Tu resultado es:</p>
-                    <h3 class="text-2xl font-serif text-zinc-900 mb-2">Aura Nuit (Eau de Parfum)</h3>
-                    <p class="text-sm text-stone-500 mb-6">Basado en tus preferencias, necesitas notas profundas y misteriosas con una base de sándalo.</p>
-                    <a href="#productos" class="inline-block bg-zinc-900 text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-zinc-800 transition-colors">
-                        Ver fragancia recomendada
-                    </a>
-                </div>
-            `;
-        }
-
-        // Gestión del formulario de suscripción
-        function handleSubscribe(e) {
-            e.preventDefault();
-            document.getElementById('form-feedback').classList.remove('hidden');
-            e.target.reset();
-        }
-    </script>
 </body>
 </html>
